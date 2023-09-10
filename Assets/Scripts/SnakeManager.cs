@@ -9,7 +9,8 @@ public class SnakeManager : MonoBehaviour
     float TurnDirection;
     [SerializeField] float BodyGap;
     [SerializeField] float TurnSpeed;
-    List<GameObject> SnakeBody = new List<GameObject>();
+    [SerializeField] float moveSpeed;
+    public List<GameObject> SnakeBody = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,7 @@ public class SnakeManager : MonoBehaviour
     void Update()
     {
         //always move forward
-        Head.transform.position += Head.transform.forward * Time.deltaTime;
+        Head.transform.position += Head.transform.forward * moveSpeed * Time.deltaTime;
 
         //steer head
         TurnDirection = Input.GetAxis("Horizontal");
@@ -46,7 +47,7 @@ public class SnakeManager : MonoBehaviour
 
             Vector3 moveDirection = targetPosition - SnakeBody[i].transform.position;
 
-            SnakeBody[i].transform.position += moveDirection * Time.deltaTime;
+            SnakeBody[i].transform.position += moveDirection * moveSpeed * Time.deltaTime;
             SnakeBody[i].transform.LookAt(targetPosition);
             SnakeBody[i].transform.rotation = Quaternion.Slerp(SnakeBody[i].transform.rotation, targetRotation, Time.deltaTime);
 
@@ -60,14 +61,14 @@ public class SnakeManager : MonoBehaviour
         }
     }
     
-    private void Grow()
+    public void Grow()
     {
         //last body segment position
         if(SnakeBody.Count > 0)
         {
             Vector3 LastPosition = SnakeBody[SnakeBody.Count - 1].transform.position;
             Vector3 SpawnPosition = new Vector3(LastPosition.x, LastPosition.y, LastPosition.z - BodyGap);
-            GameObject body = Instantiate(SnakeBodyPrefab, SpawnPosition - Vector3.forward, Quaternion.identity, transform);
+            GameObject body = Instantiate(SnakeBodyPrefab, SpawnPosition - Vector3.forward, SnakeBody[SnakeBody.Count-1].transform.localRotation, transform);
             SnakeBody.Add(body);
         } else
         {
