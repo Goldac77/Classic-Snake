@@ -7,6 +7,7 @@ public class SnakeManager : MonoBehaviour
     public GameObject SnakeBodyPrefab;
     public GameObject Head;
     float TurnDirection;
+    public Vector3 middleBodyPos;
     [SerializeField] float BodyGap;
     [SerializeField] float TurnSpeed;
     [SerializeField] float moveSpeed;
@@ -20,6 +21,12 @@ public class SnakeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //middle body position
+        if(SnakeBody.Count > 5)
+        {
+            middleBodyPos = SnakeBody[SnakeBody.Count / 2].transform.position;
+        }
+
         //always move forward
         Head.transform.position += Head.transform.forward * moveSpeed * Time.deltaTime;
 
@@ -77,5 +84,10 @@ public class SnakeManager : MonoBehaviour
             GameObject body = Instantiate(SnakeBodyPrefab, SpawnPosition - Vector3.forward, Quaternion.identity, transform);
             SnakeBody.Add(body);
         }   
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(middleBodyPos, SnakeBody.Count);
     }
 }

@@ -11,10 +11,10 @@ public class EggScript : MonoBehaviour
     List<Vector3> snakeBodyPosition = new List<Vector3>();
 
     //play boundary
-    float minX = -37.99762f;
-    float maxX = 30.33238f;
-    float minZ = -23.38314f;
-    float maxZ = 61.07686f;
+    float minX = -28.07f;
+    float maxX = 18.1f;
+    float minZ = -23.91f;
+    float maxZ = 21.3f;
 
     Vector3 randomPosition;
     // Start is called before the first frame update
@@ -32,6 +32,8 @@ public class EggScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //add location of the head to total positions
+        snakeBodyPosition.Add(snakeManager.Head.transform.position);
         //get the position of all snake body segments
         foreach(var body in snakeManager.SnakeBody)
         {
