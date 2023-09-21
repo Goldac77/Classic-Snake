@@ -70,7 +70,7 @@ public class SnakeManager : MonoBehaviour
     
     public void Grow()
     {
-        //last body segment position
+        //last body segment position and spawn positions
         if(SnakeBody.Count > 0)
         {
             Vector3 LastPosition = SnakeBody[SnakeBody.Count - 1].transform.position;

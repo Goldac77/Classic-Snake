@@ -8,16 +8,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject snake;
     SnakeManager snakeManager;
     Vector3 middleBodyPos;
+    GameObject egg;
+    EggScript eggScript;
+    Vector3 eggPosition;
 
-    //play boundary
-    float minX = -28.07f;
-    float maxX = 18.1f;
-    float minZ = -23.91f;
-    float maxZ = 21.3f;
+    //obstacles play boundary
+    float minX = -22.21f;
+    float maxX = 9.8f;
+    float minZ = -19.09f;
+    float maxZ = 12.86f;
 
+    //obstacle data
     Vector3 randomPosition;
     int randomIndex = 0;
-    bool obstacleInstantiated = false;
+    GameObject spawnedObstacle;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,17 +37,18 @@ public class GameManager : MonoBehaviour
         {
             //instantiate obstacles
             getRandomPosition();
-            if(Vector3.Distance(randomPosition, middleBodyPos) < snakeLength)
+            if(Vector3.Distance(randomPosition, middleBodyPos) < snakeLength || randomPosition == eggPosition)
             {
                 getRandomPosition();
             } else
             {
-                if (!obstacleInstantiated)
+                if (!spawnedObstacle)
                 {
                     instantiateObstacle();
                 } else
                 {
                     //TODO: destroy obstacles after 30s
+                    Destroy(spawnedObstacle, 30f);
                 }
             }
         }
@@ -61,8 +66,11 @@ public class GameManager : MonoBehaviour
 
     void instantiateObstacle()
     {
+        egg = GameObject.FindWithTag("egg");
+        eggScript = egg.GetComponent<EggScript>();
+        eggPosition = eggScript.spawnLocation;
+
         getRandomIndex();
-        Instantiate(obstacles[randomIndex], randomPosition, Quaternion.identity);
-        obstacleInstantiated = true;
+        spawnedObstacle = Instantiate(obstacles[randomIndex], randomPosition, Quaternion.identity);
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - egg
   - head
   - snake
+  - obstacle
   layers:
   - Default
   - TransparentFX

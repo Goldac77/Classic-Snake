@@ -7,8 +7,9 @@ public class EggScript : MonoBehaviour
     [SerializeField] GameObject eggPrefab;
     GameObject snake;
     SnakeManager snakeManager;
-    Vector3 spawnLocation;
+    public Vector3 spawnLocation;
     List<Vector3> snakeBodyPosition = new List<Vector3>();
+    AudioSource eatSound;
 
     //play boundary
     float minX = -28.07f;
@@ -17,6 +18,7 @@ public class EggScript : MonoBehaviour
     float maxZ = 21.3f;
 
     Vector3 randomPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,7 @@ public class EggScript : MonoBehaviour
     {
         snake = GameObject.FindWithTag("snake");
         snakeManager = snake.GetComponent<SnakeManager>();
+        eatSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -50,6 +53,7 @@ public class EggScript : MonoBehaviour
     {
         if(collision.gameObject.tag == "head")
         {
+            eatSound.Play();
             snakeManager.Grow();
             getRandomPosition();
 
