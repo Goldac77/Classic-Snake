@@ -13,10 +13,10 @@ public class GameManager : MonoBehaviour
     Vector3 eggPosition;
 
     //obstacles play boundary
-    float minX = -22.21f;
-    float maxX = 9.8f;
-    float minZ = -19.09f;
-    float maxZ = 12.86f;
+    float minX = -20.27f;
+    float maxX = 10.81f;
+    float minZ = -18.9f;
+    float maxZ = 12.75f;
 
     //obstacle data
     Vector3 randomPosition;
