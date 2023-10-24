@@ -73,4 +73,10 @@ public class GameManager : MonoBehaviour
         getRandomIndex();
         spawnedObstacle = Instantiate(obstacles[randomIndex], randomPosition, Quaternion.identity);
     }
+
+    public void gameOver()
+    {
+        //move to gameover screen
+        Debug.Log("Game Over!!");
+    }
 }

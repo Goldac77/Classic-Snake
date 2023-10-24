@@ -9,8 +9,8 @@ public class SnakeManager : MonoBehaviour
     float TurnDirection;
     public Vector3 middleBodyPos;
     [SerializeField] float BodyGap;
-    [SerializeField] float TurnSpeed;
-    [SerializeField] float moveSpeed;
+    public float turnSpeed;
+    public float moveSpeed;
     public List<GameObject> SnakeBody = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,7 @@ public class SnakeManager : MonoBehaviour
 
         //steer head
         TurnDirection = Input.GetAxis("Horizontal");
-        Head.transform.Rotate(Vector3.up * TurnDirection * TurnSpeed * Time.deltaTime);
+        Head.transform.Rotate(Vector3.up * TurnDirection * turnSpeed * Time.deltaTime);
 
         for (int i = 0; i < SnakeBody.Count; i++)
         {
@@ -42,13 +42,13 @@ public class SnakeManager : MonoBehaviour
             if (i == 0)
             {
                 // Follow the head
-                targetPosition = Head.transform.position - (Head.transform.forward * BodyGap);
+                targetPosition = Head.transform.position - (Head.transform.forward * 0.6f);
                 targetRotation = Head.transform.rotation;
             }
             else
             {
                 // Follow the previous body segment
-                targetPosition = SnakeBody[i - 1].transform.position - (SnakeBody[i].transform.forward * BodyGap);
+                targetPosition = SnakeBody[i - 1].transform.position - (SnakeBody[i-1].transform.forward * BodyGap);
                 targetRotation = SnakeBody[i - 1].transform.rotation;
             }
 
@@ -74,14 +74,14 @@ public class SnakeManager : MonoBehaviour
         if(SnakeBody.Count > 0)
         {
             Vector3 LastPosition = SnakeBody[SnakeBody.Count - 1].transform.position;
-            Vector3 SpawnPosition = new Vector3(LastPosition.x, LastPosition.y, LastPosition.z - BodyGap);
-            GameObject body = Instantiate(SnakeBodyPrefab, SpawnPosition - Vector3.forward, SnakeBody[SnakeBody.Count-1].transform.localRotation, transform);
+            Vector3 SpawnPosition = new Vector3(LastPosition.x, LastPosition.y, LastPosition.z - 0.6f);
+            GameObject body = Instantiate(SnakeBodyPrefab, SpawnPosition, Quaternion.identity, transform);
             SnakeBody.Add(body);
         } else
         {
             Vector3 HeadPosition = Head.transform.position;
             Vector3 SpawnPosition = new Vector3(HeadPosition.x, HeadPosition.y, HeadPosition.z - BodyGap);
-            GameObject body = Instantiate(SnakeBodyPrefab, SpawnPosition - Vector3.forward, Quaternion.identity, transform);
+            GameObject body = Instantiate(SnakeBodyPrefab, SpawnPosition, Quaternion.identity, transform);
             SnakeBody.Add(body);
         }   
     }

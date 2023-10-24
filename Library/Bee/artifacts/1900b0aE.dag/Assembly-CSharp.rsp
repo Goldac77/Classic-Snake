@@ -357,6 +357,8 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.0f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/EggScript.cs"
 "Assets/Scripts/Game Manager.cs"
+"Assets/Scripts/HeadOnCollision.cs"
+"Assets/Scripts/MainMenuScript.cs"
 "Assets/Scripts/SnakeHeadScript.cs"
 "Assets/Scripts/SnakeManager.cs"
 -langversion:9.0

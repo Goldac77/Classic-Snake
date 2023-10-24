@@ -61,6 +61,8 @@
     <Compile Include="Assets\Scripts\EggScript.cs" />
     <Compile Include="Assets\Scripts\Game Manager.cs" />
     <Compile Include="Assets\Scripts\SnakeHeadScript.cs" />
+    <Compile Include="Assets\Scripts\MainMenuScript.cs" />
+    <Compile Include="Assets\Scripts\HeadOnCollision.cs" />
     <Compile Include="Assets\Scripts\SnakeManager.cs" />
   </ItemGroup>
   <ItemGroup>

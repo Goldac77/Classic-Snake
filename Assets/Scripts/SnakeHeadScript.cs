@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SnakeHeadScript : MonoBehaviour
 {
+    public SnakeManager snakeManager;
     AudioSource eatSound;
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,11 @@ public class SnakeHeadScript : MonoBehaviour
         if(collision.gameObject.tag == "egg")
         {
             eatSound.Play();
+            if(snakeManager.turnSpeed <= 105)
+            {
+                snakeManager.moveSpeed += 1;
+                snakeManager.turnSpeed += 10;
+            } 
         }
     }
 }
