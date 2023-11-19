@@ -6,16 +6,17 @@ public class SnakeManager : MonoBehaviour
 {
     public GameObject SnakeBodyPrefab;
     public GameObject Head;
-    float TurnDirection;
     public Vector3 middleBodyPos;
     [SerializeField] float BodyGap;
     public float turnSpeed;
     public float moveSpeed;
+    [SerializeField] GameHUD gameHud;
+    int score;
     public List<GameObject> SnakeBody = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
-
+        score = 0;
     }
 
     // Update is called once per frame
@@ -26,13 +27,6 @@ public class SnakeManager : MonoBehaviour
         {
             middleBodyPos = SnakeBody[SnakeBody.Count / 2].transform.position;
         }
-
-        //always move forward
-        Head.transform.position += Head.transform.forward * moveSpeed * Time.deltaTime;
-
-        //steer head
-        TurnDirection = Input.GetAxis("Horizontal");
-        Head.transform.Rotate(Vector3.up * TurnDirection * turnSpeed * Time.deltaTime);
 
         for (int i = 0; i < SnakeBody.Count; i++)
         {
@@ -74,16 +68,42 @@ public class SnakeManager : MonoBehaviour
         if(SnakeBody.Count > 0)
         {
             Vector3 LastPosition = SnakeBody[SnakeBody.Count - 1].transform.position;
-            Vector3 SpawnPosition = new Vector3(LastPosition.x, LastPosition.y, LastPosition.z - 0.6f);
+            Vector3 SpawnPosition = new Vector3(LastPosition.x, LastPosition.y, LastPosition.z - (BodyGap + 1f));
             GameObject body = Instantiate(SnakeBodyPrefab, SpawnPosition, Quaternion.identity, transform);
             SnakeBody.Add(body);
         } else
         {
+            //spawn first body segment
             Vector3 HeadPosition = Head.transform.position;
-            Vector3 SpawnPosition = new Vector3(HeadPosition.x, HeadPosition.y, HeadPosition.z - BodyGap);
+            Vector3 SpawnPosition = new Vector3(HeadPosition.x, HeadPosition.y, HeadPosition.z - (0.6f + 1f));
             GameObject body = Instantiate(SnakeBodyPrefab, SpawnPosition, Quaternion.identity, transform);
             SnakeBody.Add(body);
-        }   
+        }
+
+        if(turnSpeed <= 105)
+        {
+            moveSpeed += 1;
+            turnSpeed += 10;
+        }
+
+        score++;
+        PlayerPrefs.SetInt("score", score);
+        gameHud.showScore(score);
+    }
+
+    public void Shrink()
+    {
+        GameObject lastBody = SnakeBody[SnakeBody.Count - 1];
+        SnakeBody.RemoveAt(SnakeBody.Count - 1);
+        Destroy(lastBody);
+
+        if (turnSpeed >= 15)
+        {
+            moveSpeed -= 2;
+            turnSpeed -= 20;
+        }
+
+        score -= 2;
     }
 
     private void OnDrawGizmos()

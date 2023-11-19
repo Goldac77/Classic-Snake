@@ -51,7 +51,6 @@ public class EggScript : MonoBehaviour
     {
         if(collision.gameObject.tag == "head")
         {
-            snakeManager.Grow();
             getRandomPosition();
 
             if (snakeBodyPosition.Contains(randomPosition))

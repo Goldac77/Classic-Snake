@@ -9,6 +9,7 @@ TagManager:
   - head
   - snake
   - obstacle
+  - obstacle_side
   layers:
   - Default
   - TransparentFX

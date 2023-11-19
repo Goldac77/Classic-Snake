@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,7 +22,8 @@ public class GameManager : MonoBehaviour
     //obstacle data
     Vector3 randomPosition;
     int randomIndex = 0;
-    GameObject spawnedObstacle;
+    [HideInInspector]public GameObject spawnedObstacle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +79,6 @@ public class GameManager : MonoBehaviour
     public void gameOver()
     {
         //move to gameover screen
-        Debug.Log("Game Over!!");
+        SceneManager.LoadScene("Game Over");
     }
 }
